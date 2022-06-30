@@ -480,8 +480,8 @@ class _CalendarState<T extends EventInterface>
       bool isThisMonthDay,
       DateTime now,) {
     // If day is in Multiple selection mode, get its color
-    bool isMultipleMarked = widget.multipleMarkedDates?.isMarked(now) ?? false;
-    Color? multipleMarkedColor = widget.multipleMarkedDates?.getColor(now);
+    // bool isMultipleMarked = widget.multipleMarkedDates?.isMarked(now) ?? false;
+    // Color? multipleMarkedColor = widget.multipleMarkedDates?.getColor(now);
 
     final markedDatesMap = widget.markedDatesMap;
     return Container(
@@ -989,7 +989,7 @@ class _CalendarState<T extends EventInterface>
       //call callback
       final onCalendarChanged = widget.onCalendarChanged;
       if (onCalendarChanged != null) {
-        WidgetsBinding.instance.addPostFrameCallback((_) {
+        WidgetsBinding.instance?.addPostFrameCallback((_) {
           onCalendarChanged(!widget.weekFormat
               ? this._dates[page]
               : this._weeks[page][firstDayOfWeek]);
