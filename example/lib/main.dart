@@ -49,10 +49,12 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  DateTime _currentDate = DateTime(2019, 2, 3);
-  DateTime _currentDate2 = DateTime(2019, 2, 3);
-  String _currentMonth = DateFormat.yMMM().format(DateTime(2019, 2, 3));
-  DateTime _targetDateTime = DateTime(2019, 2, 3);
+  // DateTime _currentDate = DateTime(2019, 2, 3);
+  // DateTime _currentDate2 = DateTime(2019, 2, 3);
+  String _currentMonthString = DateFormat.yMMM().format(DateTime(2019, 2, 3));
+  DateTime now = DateTime.now();
+  late DateTime _targetDateTime;
+
 //  List<DateTime> _markedDate = [DateTime(2018, 9, 20), DateTime(2018, 10, 11)];
   static Widget _eventIcon = new Container(
     decoration: new BoxDecoration(
@@ -95,6 +97,9 @@ class _MyHomePageState extends State<MyHomePage> {
 
   @override
   void initState() {
+
+    _targetDateTime = DateTime(now.year, now.month);
+
     /// Add more events to _markedDateMap EventList
     _markedDateMap.add(
         new DateTime(2019, 2, 25),
@@ -135,52 +140,52 @@ class _MyHomePageState extends State<MyHomePage> {
   @override
   Widget build(BuildContext context) {
     /// Example with custom icon
-    final _calendarCarousel = CalendarCarousel<Event>(
-      onDayPressed: (date, events) {
-        this.setState(() => _currentDate = date);
-        events.forEach((event) => print(event.title));
-      },
-      weekendTextStyle: TextStyle(
-        color: Colors.red,
-      ),
-      thisMonthDayBorderColor: Colors.grey,
-//          weekDays: null, /// for pass null when you do not want to render weekDays
-      headerText: 'Custom Header',
-      weekFormat: true,
-      markedDatesMap: _markedDateMap,
-      height: 200.0,
-      selectedDateTime: _currentDate2,
-      showIconBehindDayText: true,
-//          daysHaveCircularBorder: false, /// null for not rendering any border, true for circular border, false for rectangular border
-      customGridViewPhysics: NeverScrollableScrollPhysics(),
-      markedDateShowIcon: true,
-      markedDateIconMaxShown: 2,
-      selectedDayTextStyle: TextStyle(
-        color: Colors.yellow,
-      ),
-      todayTextStyle: TextStyle(
-        color: Colors.blue,
-      ),
-      markedDateIconBuilder: (event) {
-        return event.icon ?? Icon(Icons.help_outline);
-      },
-      minSelectedDate: _currentDate.subtract(Duration(days: 360)),
-      maxSelectedDate: _currentDate.add(Duration(days: 360)),
-      todayButtonColor: Colors.transparent,
-      todayBorderColor: Colors.green,
-      markedDateMoreShowTotal:
-          true, // null for not showing hidden events indicator
-//          markedDateIconMargin: 9,
-//          markedDateIconOffset: 3,
-    );
+//     final _calendarCarousel = CalendarCarousel<Event>(
+//       onDayPressed: (date, events) {
+//         this.setState(() => _currentDate = date);
+//         events.forEach((event) => print(event.title));
+//       },
+//       weekendTextStyle: TextStyle(
+//         color: Colors.red,
+//       ),
+//       thisMonthDayBorderColor: Colors.grey,
+// //          weekDays: null, /// for pass null when you do not want to render weekDays
+//       headerText: 'Custom Header',
+//       weekFormat: true,
+//       markedDatesMap: _markedDateMap,
+//       height: 200.0,
+//       selectedDateTime: _currentDate2,
+//       showIconBehindDayText: true,
+// //          daysHaveCircularBorder: false, /// null for not rendering any border, true for circular border, false for rectangular border
+//       customGridViewPhysics: NeverScrollableScrollPhysics(),
+//       markedDateShowIcon: true,
+//       markedDateIconMaxShown: 2,
+//       selectedDayTextStyle: TextStyle(
+//         color: Colors.yellow,
+//       ),
+//       todayTextStyle: TextStyle(
+//         color: Colors.blue,
+//       ),
+//       markedDateIconBuilder: (event) {
+//         return event.icon ?? Icon(Icons.help_outline);
+//       },
+//       minSelectedDate: _currentDate.subtract(Duration(days: 360)),
+//       maxSelectedDate: _currentDate.add(Duration(days: 360)),
+//       todayButtonColor: Colors.transparent,
+//       todayBorderColor: Colors.green,
+//       markedDateMoreShowTotal:
+//           true, // null for not showing hidden events indicator
+// //          markedDateIconMargin: 9,
+// //          markedDateIconOffset: 3,
+//     );
 
     /// Example Calendar Carousel without header and custom prev & next button
     final _calendarCarouselNoHeader = CalendarCarousel<Event>(
       todayBorderColor: Colors.green,
-      onDayPressed: (date, events) {
-        this.setState(() => _currentDate2 = date);
-        events.forEach((event) => print(event.title));
-      },
+      // onDayPressed: (date, events) {
+      //   this.setState(() => _currentDate2 = date);
+      //   events.forEach((event) => print(event.title));
+      // },
       daysHaveCircularBorder: true,
       showOnlyCurrentMonthDate: false,
       weekendTextStyle: TextStyle(
@@ -191,7 +196,7 @@ class _MyHomePageState extends State<MyHomePage> {
 //      firstDayOfWeek: 4,
       markedDatesMap: _markedDateMap,
       height: 420.0,
-      selectedDateTime: _currentDate2,
+      // selectedDateTime: _currentDate2,
       targetDateTime: _targetDateTime,
       customGridViewPhysics: NeverScrollableScrollPhysics(),
       markedDateCustomShapeBorder:
@@ -215,8 +220,8 @@ class _MyHomePageState extends State<MyHomePage> {
       selectedDayTextStyle: TextStyle(
         color: Colors.yellow,
       ),
-      minSelectedDate: _currentDate.subtract(Duration(days: 360)),
-      maxSelectedDate: _currentDate.add(Duration(days: 360)),
+      // minSelectedDate: _currentDate.subtract(Duration(days: 360)),
+      // maxSelectedDate: _currentDate.add(Duration(days: 360)),
       prevDaysTextStyle: TextStyle(
         fontSize: 16,
         color: Colors.pinkAccent,
@@ -225,80 +230,121 @@ class _MyHomePageState extends State<MyHomePage> {
         color: Colors.tealAccent,
         fontSize: 16,
       ),
-      onCalendarChanged: (DateTime date) {
-        this.setState(() {
-          _targetDateTime = date;
-          _currentMonth = DateFormat.yMMM().format(_targetDateTime);
-        });
-      },
+      // onCalendarChanged: (DateTime date) {
+      //   this.setState(() {
+      //     _targetDateTime = date;
+      //     _currentMonthString = DateFormat.yMMM().format(_targetDateTime);
+      //   });
+      // },
       onDayLongPressed: (DateTime date) {
         print('long pressed date $date');
       },
     );
 
     return new Scaffold(
-        appBar: new AppBar(
-          title: new Text(widget.title),
+      appBar: new AppBar(
+        title: new Text(widget.title),
+      ),
+      body: SingleChildScrollView(
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          mainAxisAlignment: MainAxisAlignment.start,
+          children: <Widget>[
+            //custom icon
+            // Container(
+            //   margin: EdgeInsets.symmetric(horizontal: 16.0),
+            //   child: _calendarCarousel,
+            // ), // This trailing comma makes auto-formatting nicer for build methods.
+            //custom icon without header
+            // Container(
+            //   margin: EdgeInsets.only(
+            //     top: 30.0,
+            //     bottom: 16.0,
+            //     left: 16.0,
+            //     right: 16.0,
+            //   ),
+            //   child: new Row(
+            //     children: <Widget>[
+            //       Expanded(
+            //           child: Text(
+            //         _currentMonthString,
+            //         style: TextStyle(
+            //           fontWeight: FontWeight.bold,
+            //           fontSize: 24.0,
+            //         ),
+            //       )),
+            //       TextButton(
+            //         child: Text('PREV'),
+            //         onPressed: () {
+            //           setState(() {
+            //             _targetDateTime = DateTime(
+            //                 _targetDateTime.year, _targetDateTime.month - 1);
+            //             _currentMonthString =
+            //                 DateFormat.yMMM().format(_targetDateTime);
+            //           });
+            //         },
+            //       ),
+            //       TextButton(
+            //         child: Text('NEXT'),
+            //         onPressed: () {
+            //           setState(() {
+            //             _targetDateTime = DateTime(
+            //                 _targetDateTime.year, _targetDateTime.month + 1);
+            //             _currentMonthString =
+            //                 DateFormat.yMMM().format(_targetDateTime);
+            //           });
+            //         },
+            //       )
+            //     ],
+            //   ),
+            // ),
+
+            DropdownButton<DateTime>(
+              value: _targetDateTime,
+              onChanged: (DateTime? newValue) {
+                setState(
+                  () {
+                    if (newValue != null) {
+                      _targetDateTime = newValue;
+                      _currentMonthString = DateFormat.yMMM().format(newValue);
+                    }
+                  },
+                );
+              },
+              items: _generateDates().map(
+                    (date) => DropdownMenuItem(
+                  value: date,
+                  child: Text(DateFormat.yMMM().format(date)),
+                ),
+              ).toList(),
+            ),
+            Container(
+              margin: EdgeInsets.symmetric(horizontal: 16.0),
+              child: _calendarCarouselNoHeader,
+            ),
+            //
+          ],
         ),
-        body: SingleChildScrollView(
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            mainAxisAlignment: MainAxisAlignment.start,
-            children: <Widget>[
-              //custom icon
-              Container(
-                margin: EdgeInsets.symmetric(horizontal: 16.0),
-                child: _calendarCarousel,
-              ), // This trailing comma makes auto-formatting nicer for build methods.
-              //custom icon without header
-              Container(
-                margin: EdgeInsets.only(
-                  top: 30.0,
-                  bottom: 16.0,
-                  left: 16.0,
-                  right: 16.0,
-                ),
-                child: new Row(
-                  children: <Widget>[
-                    Expanded(
-                        child: Text(
-                      _currentMonth,
-                      style: TextStyle(
-                        fontWeight: FontWeight.bold,
-                        fontSize: 24.0,
-                      ),
-                    )),
-                    TextButton(
-                      child: Text('PREV'),
-                      onPressed: () {
-                        setState(() {
-                          _targetDateTime = DateTime(
-                              _targetDateTime.year, _targetDateTime.month - 1);
-                          _currentMonth =
-                              DateFormat.yMMM().format(_targetDateTime);
-                        });
-                      },
-                    ),
-                    TextButton(
-                      child: Text('NEXT'),
-                      onPressed: () {
-                        setState(() {
-                          _targetDateTime = DateTime(
-                              _targetDateTime.year, _targetDateTime.month + 1);
-                          _currentMonth =
-                              DateFormat.yMMM().format(_targetDateTime);
-                        });
-                      },
-                    )
-                  ],
-                ),
-              ),
-              Container(
-                margin: EdgeInsets.symmetric(horizontal: 16.0),
-                child: _calendarCarouselNoHeader,
-              ), //
-            ],
-          ),
-        ));
+      ),
+    );
+  }
+
+  List<DateTime> _generateDates() {
+    // Use Jiffy
+    final dates = <DateTime>[];
+
+    DateTime now = DateTime.now();
+
+
+    DateTime date = DateTime(now.year, now.month);
+
+    dates.add(date);
+
+    for (var j = 0; j < 3; j++) {
+      date = DateTime(date.year, date.month - 1);
+      dates.add(date);
+    }
+
+    return dates.reversed.toList();
   }
 }
